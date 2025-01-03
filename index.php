@@ -36,8 +36,8 @@ require_once 'header.php';
                 <div class="product-info">
                     <?php 
                     $productName = htmlspecialchars($product['name']);
-                    if (strlen($productName) > 12) {
-                        $productName = substr($productName, 0, 12) . '...';
+                    if (strlen($productName) > 15) {
+                        $productName = substr($productName, 0, 15) . '...';
                     }
                     ?>
                     <h3 class="product-title"><?php echo $productName; ?></h3>
