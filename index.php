@@ -34,7 +34,13 @@ require_once 'header.php';
                     <div class="price-tag"><?php echo number_format($product['price'], 2); ?> ₺</div>
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title"><?php echo htmlspecialchars($product['name']); ?></h3>
+                    <?php 
+                    $productName = htmlspecialchars($product['name']);
+                    if (strlen($productName) > 12) {
+                        $productName = substr($productName, 0, 12) . '...';
+                    }
+                    ?>
+                    <h3 class="product-title"><?php echo $productName; ?></h3>
                 </div>
             </div>
             <?php endforeach; else: ?>
