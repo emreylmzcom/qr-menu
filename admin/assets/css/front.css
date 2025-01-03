@@ -7,6 +7,7 @@
     --dark: #2c3e50;
     --card-shadow: rgba(0, 0, 0, 0.2) 0px 4px 20px;
     --hover-transform: translateY(-5px);
+    --new-product: #ff5733;
 }
 
 body {
@@ -118,6 +119,7 @@ body {
 .product-card {
     background: white;
     width: 100%;
+    height: 100%;
     max-width: 250px; 
     margin: 0 auto;
     border-radius: 12px;
@@ -155,53 +157,107 @@ body {
     transform: scale(1.05);
 }
 
+/* Fiyat Etiketi */
 .price-tag {
     position: absolute;
-    top: 10px;
-    right: 5px;
+    top: 5px; /* Üstte biraz daha yukarı alındı */
+    right: 8px;
     background: var(--secondary);
     color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 25px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.7rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    height: 22px;
 }
 
-.recommended-badge, .new-badge {
+/* Badgeleri fiyat etiketinin altına koyup boşluk ekleyelim */
+.badge-container {
     position: absolute;
-    top: 10px;
-    left: 5px;
-    padding: 3px 6px;
-    border-radius: 20px;
-    color: white;
-    font-weight: 600;
-    font-size: 0.8rem;
-    z-index: 1;
+    top: 32px; /* Fiyat etiketinin hemen altına biraz boşluk bırakıldı */
+    right: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 5px; /* Badgeler arasındaki mesafeyi artırdık */
+    max-width: 80px;
 }
 
+/* Badgeler için stil (fiyat etiketi ile aynı boyutta) */
+.badge {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    border-radius: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    height: 22px;
+}
+
+
+
+/* Özel badgeler */
 .recommended-badge {
     background-color: var(--accent);
+    color: white;
 }
 
 .new-badge {
-    background-color: var(--secondary);
+    background-color: var(--new-product);
+    color: white;
 }
-
 
 .vegan-badge {
-    position: absolute;
-    top: 10px;
-    left: 5px;
-    background-color: #28a745; /* Yeşil renk */
-    color: #fff;
-    padding: 3px 6px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    z-index: 1;
+    background-color: #28a745;
+    color: white;
 }
 
+
+
+/* Mobilde 2 Ürün Yan Yana */
+@media (max-width: 576px) {
+    .row {
+        grid-template-columns: repeat(2, 1fr); /* Mobilde 2 sütun */
+        gap: 0.5rem;
+    }
+
+    .product-card {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .product-info {
+        padding: 0.5rem;
+    }
+
+    .product-title {
+        font-size: 0.85rem;
+    }
+
+    .product-description {
+        font-size: 0.75rem;
+    }
+
+    .price-tag {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+    }
+
+    .badge-container {
+        top: 30px; /* Mobilde fiyat etiketiyle badgeler arasındaki mesafeyi azalt */
+        gap: 3px;
+    }
+}
 
 
 
@@ -572,3 +628,55 @@ body {
         max-width: 110px;
     }
 }
+
+
+
+/* Modal içindeki öğeleri hizalama */
+.modal-body {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Resim genişliği */
+.modal-body img {
+    width: 100%;
+    max-width: 350px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* Ürün adı */
+#modalProductName {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Fiyat metni */
+.modal-price {
+    font-size: 1.3rem; /* Daha büyük font */
+    font-weight: bold; /* Kalın yazı */
+    color: var(--primary); /* Ana renk (isteğe göre değiştirebilirsin) */
+    padding: 10px 15px; /* İç boşluk eklendi */
+    border-radius: 8px; /* Hafif yuvarlatılmış görünüm */
+    display: inline-block; /* Blok gibi görünmesini sağlar */
+    margin: 10px 0; /* Üst ve alt boşluk */
+}
+
+
+/* Açıklama metni */
+#modalProductDescription {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+/* Kapat butonu */
+.modal-footer .btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+}
+

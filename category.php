@@ -4,7 +4,12 @@ require_once 'header.php';
 
 list($category, $products) = fetchCategoryAndProducts($db);
 $vegan_products = getVeganProducts($db);
+
+
 ?>
+
+
+
 
 <div class="hero-section">
         <div class="hero-content">
@@ -18,7 +23,7 @@ $vegan_products = getVeganProducts($db);
         <h2 class="category-title"><?php echo $category['name']; ?></h2>
     </div>
 
-<div class="row g-2">
+    <div class="row g-2">
     <?php if (empty($products)): ?>
         <div class="col-12">
             <p class="text-center">Şu anda bu kategori boş.</p>
@@ -27,7 +32,7 @@ $vegan_products = getVeganProducts($db);
         <?php foreach($products as $product): 
             $image = !empty($product['image']) ? UPLOAD_DIR . $product['image'] : (isset($settings['logo']) ? UPLOAD_DIR . $settings['logo'] : 'assets/img/no-image.jpg');
         ?>
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6 col-6"> <!-- Mobilde 2 sütun için col-6 eklendi -->
             <div class="product-card" 
                 data-bs-toggle="modal" 
                 data-bs-target="#productModal" 
@@ -35,16 +40,23 @@ $vegan_products = getVeganProducts($db);
                 data-image="<?php echo $image; ?>"
                 data-price="<?php echo number_format($product['price'], 2); ?>"
                 data-description="<?php echo !empty($product['description']) ? $product['description'] : 'Açıklama yok.'; ?>">
-                
-                <?php if (in_array($product, $vegan_products)): ?>
-                    <div class="vegan-badge">Vegan</div>
-                <?php endif; ?>
-                
+
                 <div class="product-image-container">
                     <img src="<?php echo $image; ?>" class="product-image" alt="<?php echo $product['name']; ?>">
+                    
+                    <!-- Fiyat Etiketi -->
                     <div class="price-tag">
                         <?php echo number_format($product['price'], 2); ?> ₺
                     </div>
+
+                    <div class="badge-container">
+        <?php if (in_array($product, $recommended_products)): ?>
+            <div class="badge recommended-badge">Önerilen</div>
+        <?php endif; ?>
+        <?php if (in_array($product, $vegan_products)): ?>
+            <div class="badge vegan-badge">Vegan</div>
+        <?php endif; ?>
+    </div>
                 </div>
 
                 <div class="product-info">
@@ -66,17 +78,17 @@ $vegan_products = getVeganProducts($db);
 
 <!-- Ürün Detay Modal -->
 <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"> <!-- Burada modal-dialog-centered eklendi -->
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="productModalLabel">Ürün Detayı</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body text-center">
-                <img id="modalProductImage" src="" class="img-fluid mb-3" alt="Ürün Resmi">
-                <h3 id="modalProductName"></h3>
+            <div class="modal-body">
+                <img id="modalProductImage" src="" alt="Ürün Resmi">
+                <h4 id="modalProductName"></h4>
+                <p class="modal-price"><strong><span id="modalProductPrice"></span> ₺</strong></p>
                 <p id="modalProductDescription"></p>
-                <h4 class="text-danger"><span id="modalProductPrice"></span> ₺</h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
@@ -84,6 +96,7 @@ $vegan_products = getVeganProducts($db);
         </div>
     </div>
 </div>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {

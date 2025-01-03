@@ -69,71 +69,89 @@ require_once 'header.php';
         $recommended_products = $db->query($recommended_query)->fetchAll(PDO::FETCH_ASSOC);
         if(count($recommended_products) > 0):
         ?>
-        <div class="category-container">
-            <div class="category-header">
-                <h2 class="category-title">Önerilen</h2>
-            </div>
-            <div class="row g-4">
-                <?php foreach($recommended_products as $product): 
-                    $image = !empty($product['image']) ? UPLOAD_DIR . $product['image'] : (isset($settings['logo']) ? UPLOAD_DIR . $settings['logo'] : 'assets/img/no-image.jpg');
-                ?>
-                <div class="col-lg-4 col-md-6">
-                    <div class="product-card">
-                        <div class="recommended-badge">Önerilen</div>
-                        <div class="product-image-container">
-                            <img src="<?php echo $image; ?>" class="product-image" alt="<?php echo $product['name']; ?>">
-                            <div class="price-tag">
-                                <?php echo number_format($product['price'], 2); ?> ₺
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title"><?php echo $product['name']; ?></h3>
-                            <?php if(!empty($product['description'])): ?>
-                            <p class="product-description"><?php echo $product['description']; ?></p>
-                            <?php endif; ?>
-                        </div>
+<div class="category-container">
+    <div class="category-header">
+        <h2 class="category-title">Önerilen</h2>
+    </div>
+    <div class="row g-4">
+        <?php foreach($recommended_products as $product): 
+            $image = !empty($product['image']) ? UPLOAD_DIR . $product['image'] : (isset($settings['logo']) ? UPLOAD_DIR . $settings['logo'] : 'assets/img/no-image.jpg');
+        ?>
+        <div class="col-lg-4 col-md-6 col-6"> <!-- Mobilde 2 sütun olması için col-6 eklendi -->
+            <div class="product-card">
+                
+                <div class="product-image-container">
+                    <img src="<?php echo $image; ?>" class="product-image" alt="<?php echo $product['name']; ?>">
+                    
+                    <!-- Fiyat Etiketi -->
+                    <div class="price-tag">
+                        <?php echo number_format($product['price'], 2); ?> ₺
+                    </div>
+
+                    <!-- Badgeler Fiyat Etiketinin Altına -->
+                    <div class="badge-container">
+                        <div class="badge recommended-badge">Önerilen</div>
                     </div>
                 </div>
-                <?php endforeach; ?>
+
+                <div class="product-info">
+                    <h3 class="product-title"><?php echo $product['name']; ?></h3>
+                    <?php if (!empty($product['description'])): ?>
+                        <p class="product-description"><?php echo $product['description']; ?></p>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
         <?php endif; ?>
+
+
 
         <?php
         // Yeni ürünleri göster
         $new_products = $db->query($new_products_query)->fetchAll(PDO::FETCH_ASSOC);
         if(count($new_products) > 0):
         ?>
-        <div class="category-container">
-            <div class="category-header">
-                <h2 class="category-title">Yeni</h2>
-            </div>
-            <div class="row g-4">
-                <?php foreach($new_products as $product): 
-                    $image = !empty($product['image']) ? UPLOAD_DIR . $product['image'] : (isset($settings['logo']) ? UPLOAD_DIR . $settings['logo'] : 'assets/img/no-image.jpg');
-                ?>
-                <div class="col-lg-4 col-md-6">
-                    <div class="product-card">
-                        <div class="new-badge">Yeni</div>
-                        <div class="product-image-container">
-                            <img src="<?php echo $image; ?>" class="product-image" alt="<?php echo $product['name']; ?>">
-                            <div class="price-tag">
-                                <?php echo number_format($product['price'], 2); ?> ₺
-                            </div>
+    <div class="category-container">
+        <div class="category-header">
+            <h2 class="category-title">Yeni</h2>
+        </div>
+        <div class="row g-4">
+            <?php foreach ($new_products as $product): 
+                $image = !empty($product['image']) ? UPLOAD_DIR . $product['image'] : (isset($settings['logo']) ? UPLOAD_DIR . $settings['logo'] : 'assets/img/no-image.jpg');
+            ?>
+            <div class="col-lg-4 col-md-6 col-6"> <!-- Mobilde 2 sütun olması için col-6 eklendi -->
+                <div class="product-card">
+                    
+                    <div class="product-image-container">
+                        <img src="<?php echo $image; ?>" class="product-image" alt="<?php echo $product['name']; ?>">
+                        
+                        <!-- Fiyat Etiketi -->
+                        <div class="price-tag">
+                            <?php echo number_format($product['price'], 2); ?> ₺
                         </div>
-                        <div class="product-info">
-                            <h3 class="product-title"><?php echo $product['name']; ?></h3>
-                            <?php if(!empty($product['description'])): ?>
-                            <p class="product-description"><?php echo $product['description']; ?></p>
-                            <?php endif; ?>
+
+                        <!-- Badgeler Fiyat Etiketinin Altına -->
+                        <div class="badge-container">
+                            <div class="badge new-badge">Yeni</div>
                         </div>
                     </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-        <?php endif; ?>
 
+                    <div class="product-info">
+                        <h3 class="product-title"><?php echo $product['name']; ?></h3>
+                        <?php if (!empty($product['description'])): ?>
+                            <p class="product-description"><?php echo $product['description']; ?></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>
         <?php
         // Normal kategorileri göster
         
