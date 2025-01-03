@@ -1,0 +1,64 @@
+/* Sidebar Styles */  
+.sidebar {  
+    min-height: 100vh;  
+    background: #2c3e50;  
+    color: white;  
+}  
+
+.sidebar .nav-link {  
+    color: #ecf0f1;  
+    padding: 15px 20px;  
+    margin: 5px 0;  
+    border-radius: 5px;  
+}  
+
+.sidebar .nav-link:hover {  
+    background: #34495e;  
+}  
+
+.sidebar .nav-link.active {  
+    background: #3498db;  
+}  
+
+/* Main Content Styles */  
+.main-content {  
+    padding: 20px;  
+    background: #f8f9fa;  
+}  
+
+/* Card Styles */  
+.stats-card {  
+    background: white;  
+    border-radius: 10px;  
+    padding: 20px;  
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);  
+    margin-bottom: 20px;  
+}  
+
+/* Navbar Styles */  
+.navbar {  
+    background: white;  
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);  
+}  
+
+/* Table Styles */  
+.table th {  
+    font-weight: 600;  
+}  
+
+/* Form Styles */  
+.form-control:focus {  
+    border-color: #3498db;  
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);  
+}  
+
+/* Button Styles */  
+.btn-primary {  
+    background-color: #3498db;  
+    border-color: #3498db;  
+}  
+
+.btn-primary:hover {  
+    background-color: #2980b9;  
+    border-color: #2980b9;  
+}  
