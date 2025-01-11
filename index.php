@@ -28,7 +28,15 @@ require_once 'header.php';
                 foreach ($recommended_products as $product):
                     $image = !empty($product['image']) ? UPLOAD_DIR . $product['image'] : (isset($settings['logo']) ? UPLOAD_DIR . $settings['logo'] : 'assets/img/no-image.jpg');
             ?>
-            <div class="product-card-home"> <!-- product-card yerine product-card-home kullanıldı -->
+            <!-- <div class="product-card-home">  product-card yerine product-card-home kullanıldı -->
+            <div class="product-card-home" 
+                data-bs-toggle="modal" 
+                data-bs-target="#productModal" 
+                data-name="<?php echo $product['name']; ?>"
+                data-image="<?php echo $image; ?>"
+                data-price="<?php echo number_format($product['price'], 2); ?>"
+                data-description="<?php echo !empty($product['description']) ? $product['description'] : ' '; ?>">
+
                 <div class="product-image-container">
                     <img src="<?php echo $image; ?>" class="product-image" alt="<?php echo htmlspecialchars($product['name']); ?>">
                     <div class="price-tag"><?php echo number_format($product['price'], 2); ?> ₺</div>
@@ -58,14 +66,15 @@ require_once 'header.php';
         <div class="category-header">
             <h2 class="category-title">Kategoriler</h2>
         </div>
-    
-    <div class="categories-container">
-        <?php foreach($categories as $category): ?>
-            <a href="category.php?id=<?php echo $category['id']; ?>" class="category-box">
-                <div class="category-name"><?php echo $category['name']; ?></div>
-            </a>
-        <?php endforeach; ?>
-    </div>
+
+        <div class="categories-container">
+            <?php foreach($categories as $category): ?>
+                <a href="category.php?id=<?php echo $category['id']; ?>" class="category-box">
+                    <div class="category-name"><?php echo $category['name']; ?></div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+
 </div>
 
 
@@ -84,7 +93,13 @@ require_once 'header.php';
             $image = !empty($product['image']) ? UPLOAD_DIR . $product['image'] : (isset($settings['logo']) ? UPLOAD_DIR . $settings['logo'] : 'assets/img/no-image.jpg');
         ?>
         <div class="col-lg-4 col-md-6 col-6"> <!-- Mobilde 2 sütun olması için col-6 eklendi -->
-            <div class="product-card">
+        <div class="product-card" 
+                data-bs-toggle="modal" 
+                data-bs-target="#productModal" 
+                data-name="<?php echo $product['name']; ?>"
+                data-image="<?php echo $image; ?>"
+                data-price="<?php echo number_format($product['price'], 2); ?>"
+                data-description="<?php echo !empty($product['description']) ? $product['description'] : ' '; ?>">
                 
                 <div class="product-image-container">
                     <img src="<?php echo $image; ?>" class="product-image" alt="<?php echo $product['name']; ?>">
@@ -103,7 +118,13 @@ require_once 'header.php';
                 <div class="product-info">
                     <h3 class="product-title"><?php echo $product['name']; ?></h3>
                     <?php if (!empty($product['description'])): ?>
-                        <p class="product-description"><?php echo $product['description']; ?></p>
+                        <p class="product-description">
+                            <?php 
+                            echo strlen($product['description']) > 20 
+                                ? substr($product['description'], 0, 20) . '...' 
+                                : $product['description']; 
+                            ?>
+                        </p>
                     <?php endif; ?>
                 </div>
             </div>
@@ -130,7 +151,13 @@ require_once 'header.php';
                 $image = !empty($product['image']) ? UPLOAD_DIR . $product['image'] : (isset($settings['logo']) ? UPLOAD_DIR . $settings['logo'] : 'assets/img/no-image.jpg');
             ?>
             <div class="col-lg-4 col-md-6 col-6"> <!-- Mobilde 2 sütun olması için col-6 eklendi -->
-                <div class="product-card">
+            <div class="product-card" 
+                data-bs-toggle="modal" 
+                data-bs-target="#productModal" 
+                data-name="<?php echo $product['name']; ?>"
+                data-image="<?php echo $image; ?>"
+                data-price="<?php echo number_format($product['price'], 2); ?>"
+                data-description="<?php echo !empty($product['description']) ? $product['description'] : ' '; ?>">
                     
                     <div class="product-image-container">
                         <img src="<?php echo $image; ?>" class="product-image" alt="<?php echo $product['name']; ?>">
@@ -149,7 +176,13 @@ require_once 'header.php';
                     <div class="product-info">
                         <h3 class="product-title"><?php echo $product['name']; ?></h3>
                         <?php if (!empty($product['description'])): ?>
-                            <p class="product-description"><?php echo $product['description']; ?></p>
+                            <p class="product-description">
+                                <?php 
+                                echo strlen($product['description']) > 20 
+                                    ? substr($product['description'], 0, 20) . '...' 
+                                    : $product['description']; 
+                                ?>
+                            </p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -177,11 +210,56 @@ require_once 'header.php';
         endforeach; 
         ?>
     </div>
-
+<!-- Ürün Detay Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Ürün Detayı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalProductImage" src="" alt="Ürün Resmi">
+                <h4 id="modalProductName"></h4>
+                <p class="modal-price"><strong><span id="modalProductPrice"></span> ₺</strong></p>
+                <p id="modalProductDescription"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php
 require_once 'footer.php'; 
 
 ?>
+
+
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var productModal = document.getElementById('productModal');
+
+    productModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;  // Tıklanan ürün kartı
+        var name = button.getAttribute('data-name');
+        var image = button.getAttribute('data-image');
+        var price = button.getAttribute('data-price');
+        var description = button.getAttribute('data-description');
+
+        // Modal içindeki öğeleri güncelle
+        document.getElementById('modalProductName').textContent = name;
+        document.getElementById('modalProductImage').src = image;
+        document.getElementById('modalProductPrice').textContent = price;
+        document.getElementById('modalProductDescription').textContent = description;
+    });
+});
+</script>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {

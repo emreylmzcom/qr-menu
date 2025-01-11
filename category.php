@@ -62,7 +62,13 @@ $vegan_products = getVeganProducts($db);
                 <div class="product-info">
                     <h3 class="product-title"><?php echo $product['name']; ?></h3>
                     <?php if(!empty($product['description'])): ?>
-                    <p class="product-description"><?php echo $product['description']; ?></p>
+                    <p class="product-description">
+                        <?php 
+                        echo strlen($product['description']) > 20 
+                            ? substr($product['description'], 0, 20) . '...' 
+                            : $product['description']; 
+                        ?>
+                    </p>
                     <?php endif; ?>
                 </div>
             </div>
