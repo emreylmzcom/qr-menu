@@ -38,7 +38,7 @@ require_once 'header.php';
                 data-description="<?php echo !empty($product['description']) ? $product['description'] : ' '; ?>">
 
                 <div class="product-image-container">
-                    <img src="<?php echo $image; ?>" class="product-image" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                    <img src="<?php echo $image; ?>" class="product-image" style="pointer-event:none;" alt="<?php echo htmlspecialchars($product['name']); ?>">
                     <div class="price-tag"><?php echo number_format($product['price'], 2); ?> ₺</div>
                 </div>
                 <div class="product-info">
